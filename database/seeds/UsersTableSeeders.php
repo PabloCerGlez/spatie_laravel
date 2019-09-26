@@ -16,31 +16,30 @@ class UsersTableSeeders extends Seeder
 
 'name'=>'editor',
 'email'=>'editor@gmail.com',
-'password'=>bcrypt('123456');
+'password'=>bcrypt('123456')
 
         ]);
 
         $editor->assignRole('editor');
 
         //usuario con el rol moderador 
-        $moderador=User::create([
+ $moderador=User::create([
 
 'name'=>'moderador',
 'email'=>'moderador@gmail.com',
-'password'=>bcrypt('123456');
+'password'=>bcrypt('123456')
 
-        ]);
+ ]);
+$moderador->assignRole('moderador'); 
 
- $moderador->assignRole('moderador'); 
 
          //usuario con el rol superadmin 
 $admin=User::create([
 
 'name'=>'admin',
 'email'=>'admin@gmail.com',
-'password'=>bcrypt('123456');
-
-        ]);
+'password'=>bcrypt('123456')
+]);
 
         $admin->assignRole('super-admin');     
     }

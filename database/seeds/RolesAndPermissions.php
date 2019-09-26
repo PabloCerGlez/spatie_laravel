@@ -13,7 +13,7 @@ class RolesAndPermissions extends Seeder
      */
     public function run()
     {
-app()['cache']->forget('spatie.permission.cache');     
+    app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
 //Create permission
         Permission::create(['name' => 'create user']);
         Permission::create(['name' => 'read users']);
