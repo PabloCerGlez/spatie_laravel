@@ -28,10 +28,9 @@
 			<td>{{ $usuario->email }}</td>
 			<td>{{ $usuario->roles->implode('name',',') }}</td>
 <td>
-						<a href="{{ url('/usuarios/edit/'.$usuario->id) }}" class="btn btn-success">editar</a>
+						<a href="{{ url('/usuarios/'.$usuario->id.'/edit') }}" class="btn btn-primary">editar</a>
 
-	<a href="#" class="btn btn-danger">Eliminar</a>
-
+                   @include('usuarios.delete', ['usuario'=>$usuario])
 </td>
 		</tr>
 		@endforeach

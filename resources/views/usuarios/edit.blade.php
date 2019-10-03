@@ -10,16 +10,18 @@
 					Nuevo usuario
 				</div>
 				<div class="card-body">
-					<form action="{{ url('usuarios') }}" method="post">
+					<form action="{{ route('usuarios.update', $usuario->id) }}" method="post">
+
 						@csrf
+						@method('PUT')
 						<div class="form-group">
 							<label for="name">Name:</label>
-                            <input type="text" name="name" required class="form-control">
+                            <input type="text" name="name" required class="form-control" value="{{ $usuario->name }}">
 
 						</div>
                         <div class="form-group">
                         	  <label for="email">Correo:</label>
-                            <input type="text" name="email" required class="form-control">
+                            <input type="text" name="email" required class="form-control" value="{{ $usuario->email }}">
                           
                             
                         </div>
@@ -32,7 +34,12 @@
                         	 <select class="form-control" name="rol">
                         	 	
                         	 	@foreach($roles as $key => $value)
-                                <option value="{{ $value }}">{{ $value }}</option>
+                        	 	@if($usuario->hasRole($value))
+                                <option value="{{ $value }}" selected>{{ $value }}</option>
+                                @else
+                                  <option value="{{ $value }}" >{{ $value }}</option>
+                                @endif
+
                         	 	@endforeach
                         	 </select>
                         </div>

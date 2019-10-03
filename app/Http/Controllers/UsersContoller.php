@@ -70,7 +70,6 @@ return redirect('/usuarios');
     public function edit($id)
     {
         $usuario=User::findOrFail($id);
-        
         $roles=Role::all()->pluck('name','id');
         return view('usuarios.edit', compact('usuario','roles'));
 
@@ -85,7 +84,16 @@ return redirect('/usuarios');
      */
     public function update(Request $request, $id)
     {
-        //
+        $usuario=User::findOrFail($id);
+        $usuario->name=$request->name;
+        $usuario->email=$request->email;
+        if($request->password != null){
+            $usuario->password=$request->password;
+        }
+        $usuario->syncRoles($request->rol);
+
+        $usuario->save();
+        return redirect('/usuarios');
     }
 
     /**
@@ -96,6 +104,17 @@ return redirect('/usuarios');
      */
     public function destroy($id)
     {
-        //
+        $usuario=User::findOrFail($id);
+
+        #Eliminar el rol 
+
+$usuario->removeRole($usuario->roles->implode('name',','));
+        #Eliminar usuario
+if($usuario->delete()){
+    return redirect('/usuarios');
+}else{
+    return response()->json(['mensaje'=>'Error al eliminar el usuario']);
+}
+
     }
 }

@@ -6,9 +6,10 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
+use Illuminate\Database\Eloquent\SoftDeletes;
 class User extends Authenticatable
 {
-    use Notifiable, HasRoles;
+    use Notifiable, HasRoles, SoftDeletes;
     protected $guard_name = 'web'; // or whatever guard you want to use 
     /**
      * The attributes that are mass assignable.
@@ -36,4 +37,11 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+
+    public function setPasswordAttribute($value){
+        if(!empty($value)){
+            $this->attributes['password']=bcrypt($value);
+        }
+    }
 }
