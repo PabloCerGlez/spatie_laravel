@@ -18,5 +18,6 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
-
+Route::group(['middleware' => ['permission:create user']], function(){
 Route::resource('usuarios','UsersContoller');
+});
